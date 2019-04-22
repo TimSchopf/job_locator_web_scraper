@@ -1,7 +1,11 @@
 # job_locator_web_scraper
-A web scraper that searches corporate websites for job postings related to specific keywords  
+A web scraper that searches corporate websites for job postings related to specific keywords.  
 
 I search for thesis offers in the area of Data Science/Machine Learning/AI near Stuttgart, Germany at the moment . Therefore I scrape the larger and well-known companies in this area, which always have a few thesis offers on their websites. The results are stored in a SQLite database with one table. Only new entries will be added to the database, in addition currently valid and new job offers will be marked. 
+
+To get regular updates about job offers, I create an executable file from the `job_locator_web_scraper.py` script, which runs automatically on a daily basis using Windows Task Scheduler. 
+
+The `job_locator_web_scraper.ipynb` Notebook is used to explore new websites and create the code for the `job_locator_web_scraper.py` script.  
 
 ## SQLite database:
 ##### Database name:  
