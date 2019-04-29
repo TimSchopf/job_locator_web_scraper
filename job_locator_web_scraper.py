@@ -122,7 +122,7 @@ for i in range(bosch_hits):
     df = pd.DataFrame(data={'Title':[bosch_title],'Company':[bosch_company],'Location':[bosch_location],'Business_Unit':[bosch_business_unit],'Description':[bosch_description],'Qualifications':[bosch_qualifications],'ApplyURL':[bosch_applyURL],'Release_Date':[bosch_releaseDate],'Valid':[1],'Interesting':[float('NaN')],'New':[1]})
     data = data.append(df, ignore_index=True)
     
-# Scrape Porsche Career 
+# Scrape Porsche Career Website
 
 # Posrsche also uses an API
 # The API URL already conatins the searched keywords, we don't need to append the porsche_keywords additionally
@@ -208,20 +208,18 @@ else:
         # use ApplyURL as PRIMARY KEY
         t = (data['ApplyURL'][i],)
         c.execute('SELECT * FROM thesis_offers WHERE ApplyURL=?', t)
-        df = data.iloc[i]
 
         # insert row of 'data' DataFrame if it is not in db
         if len(c.fetchall()) == 0:    
-            insert = [(df['ApplyURL'],df['Business_Unit'],df['Company'],df['Description'],df['Interesting'],df['Location'],df['Qualifications'],df['Release_Date'],df['Title'],df['Valid']),]
-            c.executemany('INSERT INTO '+db_table_name+' VALUES (?,?,?,?,?,?,?,?,?,?)', insert)
+            insert = [(data['ApplyURL'][i],data['Business_Unit'][i],data['Company'][i],data['Description'][i],data['Interesting'][i],data['Location'][i],data['New'][i],data['Qualifications'][i],data['Release_Date'][i],data['Title'][i],data['Valid'][i]),]
+            c.executemany('INSERT INTO '+db_table_name+' VALUES (?,?,?,?,?,?,?,?,?,?,?)', insert)
 
         # set db Valid value to 1 if element is currently in 'data' DataFrame
         else:
-            c.execute('UPDATE '+db_table_name+' SET Valid = ? WHERE ApplyURL=?', (Valid, df['ApplyURL']))
+            c.execute('UPDATE '+db_table_name+' SET Valid = ? WHERE ApplyURL=?', (Valid, data['ApplyURL'][i]))
 
     # save db changes
     conn.commit()
 
 # close db connection    
 conn.close()
-print('database updates finished')
