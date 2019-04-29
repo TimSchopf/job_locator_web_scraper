@@ -223,3 +223,5 @@ else:
 
 # close db connection    
 conn.close()
+
+print('database updates finished')
